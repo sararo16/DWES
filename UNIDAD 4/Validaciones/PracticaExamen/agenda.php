@@ -40,13 +40,14 @@ if (isset($_POST['grabar'])) {
         if (!$result) die ("Fatal Error");
        }
    }
-    if ($todo_ok){
-         $num = count ($_SESSION['imagenes']);
-         $_SESSION ['num']=$num;
-         header ("Location:grabado.php");
-         exit();
-    }
+        if ($todo_ok){
+     $_SESSION['num'] = count($_SESSION['imagenes']);  
+        header("Location: grabado.php");
+        exit();
 }
+
+    }
+
 ?>
 <html>
     <body>
