@@ -44,7 +44,7 @@ if (isset ($_POST['incrementar'])){
     $_SESSION['imagenes'][]=$imagen;
         //si hay 5 imagenes se redirige 
     if (count($_SESSION['imagenes'])>=5){
-        header("Location:grabar.php");
+        header("Location:agenda.php");
         exit();
         }
 }
