@@ -73,5 +73,3 @@ if (isset ($_POST['incrementar'])){
         </form>
     </body>
 </html>
-
-
