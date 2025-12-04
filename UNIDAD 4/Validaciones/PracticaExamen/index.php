@@ -48,7 +48,6 @@ echo <<<_END
                 <input type="password" name="clave"><br><br>
                 <input type="submit" name="submit" value="Entrar">
             </form>
-            <p>$error</p>
     </body>
 </html>
 _END;  

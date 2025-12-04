@@ -2,8 +2,8 @@
 session_start();
 $hn = 'localhost';
 $db = 'jerogrifico';
-$un = 'jugador';       // ahora sí existe
-$pw = 'tu_password';   // la contraseña que le diste
+$un = 'jugador';       
+$pw = '';   
 $connection = new mysqli($hn, $un, $pw, $db);
 
 
@@ -22,19 +22,28 @@ if (isset($_SESSION['login'])) {
     $nombre=$login;
 }
 
+if (isset($_POST['solucion'])) {
+    $solucion = $_POST['solucion'];
+    $query = "INSERT INTO solucion (solucion, login) VALUES ('$solucion', '$login')";
+    $result = $connection->query($query);
+    if (!$result) die("Fatal Error");
+}
+
+$connection->close();
+
 echo <<<_END
 <html>
     <body>
         <h3>Bienvenido $nombre. !</h3>
-    <img src="imagen/20240216.jpg" alt="Jerogrifico del dia">
+    <img src="imagen/20240216.jpg" alt="Jerogrifico del dia" width="500" height="500">
     <form method="post" action="inicio.php">
         <label>Solución al jerogrífico:</label>
         <input type="text" name="solucion" required>
         <input type="submit"  value="Enviar">
     </form>
 
-    <a href="">Ver puntos por jugador</a>
-    <a href="">Resultados del día</a>
+    <a href="puntos.php">Ver puntos por jugador</a>
+    <a href="resultado.php">Resultados del día</a>
     </body>
 </html>
 _END;

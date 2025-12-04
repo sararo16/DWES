@@ -8,7 +8,7 @@ if (!isset($_SESSION['nombre'])) {
 }
 
 $usuario = $_SESSION['nombre'];
-$num     = $_SESSION['num'];   // ahora siempre está definida
+$num     = $_SESSION['num'];   
 
 echo "<h2>AGENDA</h2>";
 echo "<p>Hola $usuario</p>";

@@ -3,7 +3,7 @@ session_start();
 
 $hn = 'localhost';
 $db = 'jerogrifico';
-$un = 'root';
+$un = 'jugador';
 $pw = '';
 
 
@@ -20,7 +20,7 @@ $connection = new mysqli($hn, $un, $pw, $db);
     $_SESSION['login'] = $login;
      $clave = $_POST['clave'];
 
-     $query = "SELECT * FROM jugador WHERE login = '$login' AND Clave = '$clave'";
+     $query = "SELECT * FROM jugador WHERE login = '$login' AND clave = '$clave'";
      $result = $connection->query($query);
      if (!$result) die("Fatal Error");
      $rows = $result->num_rows;
