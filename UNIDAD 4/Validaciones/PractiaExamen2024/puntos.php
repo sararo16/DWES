@@ -40,7 +40,7 @@ for ($j = 0 ; $j < $rows ; ++$j) {
     $login = htmlspecialchars($row['login']);
     $puntos = htmlspecialchars($row['puntos']);
 
-    
+
 $ancho = $puntos * 3; 
 
     echo "<tr>";
@@ -59,8 +59,6 @@ $result->close();
 
 echo <<<_END
         </table>
-        <br>
-        <a href="inicio.php">Volver</a>
     </body>
 </html>
 _END;
