@@ -19,15 +19,20 @@ if ($consultaSolucion->num_rows==0){
 }
 
 //sumar puntos
-$puntoDia =$connection->query ("UPDATE jugador j INNER JOIN respuestas r ON j.login INNER JOIN solucion s ON r.fecha = s.fecha 
-SET j.puntos=j.puntos+1
-WHERE r.respuesta='$hoy'");
+$sumaPuntos=$connection-> query ("UPDATE jugador
+    SET puntos = puntos + 1
+    WHERE login IN (
+        SELECT r.login
+        FROM respuestas r
+        INNER JOIN solucion s ON r.fecha = s.fecha
+        WHERE r.respuesta = s.solucion
+        AND r.fecha = '$hoy')");
+
 
 //resultados
 $aciertos= $connection->query ("SELECT login, hora FROM respuestas r
 INNER JOIN solucion s ON r.fecha=s.fecha
 WHERE r.respuesta=s.solucion AND r.fecha='$hoy'");
-
 $fallos= $connection->query ("SELECT login, hora FROM respuestas r
 INNER JOIN solucion s ON r.fecha=s.fecha
 WHERE r.respuesta!=s.solucion AND r.fecha='$hoy'");
@@ -35,34 +40,26 @@ WHERE r.respuesta!=s.solucion AND r.fecha='$hoy'");
 
 
 
+echo "<html><body>";
+echo "<h1>Fecha: $hoy</h1>";
 
-echo <<<_END
-<html>
-    <body>
-        <h1>Fecha: $hoy</h1>
-        <h2>Jugadores acertantes: $aciertos->num_rows</h2>
-        <table>
-            <tr>
-                <th>Login</th>
-                <th>Hora</th>
-            </tr>
-            $aciertos->data_seek(0);
-            while ($aciertos->fetch_assoc()) {
-                echo "<tr><td>".$aciertos->login."</td><td>".$aciertos->hora."</td></tr>";
-            }   
-        </table>
-        <h2>Jugadores que han fallado: $fallos->num_rows</h2>
-        <table>
-            <tr>
-                <th>Login</th>
-                <th>Hora</th>
-            </tr>
-            $fallos->data_seek(0);
-            while ($fallos->fetch_assoc()) {
-                echo "<tr><td>".$fallos->login."</td><td>".$fallos->hora."</td></tr>";
-            }
-</body>
-</html>
-_END;
+echo "<h2>Jugadores acertantes: ".$aciertos->num_rows."</h2>";
+echo "<table><tr><th>Login</th><th>Hora</th></tr>";
+
+while ($row = $aciertos->fetch_assoc()) {
+    echo "<tr><td>".$row['login']."</td><td>".$row['hora']."</td></tr>";
+}
+
+echo "</table>";
+
+echo "<h2>Jugadores que han fallado: ".$fallos->num_rows."</h2>";
+echo "<table><tr><th>Login</th><th>Hora</th></tr>";
+
+while ($row = $fallos->fetch_assoc()) {
+    echo "<tr><td>".$row['login']."</td><td>".$row['hora']."</td></tr>";
+}
+echo "</table>";
+
+echo "</body></html>";
 
 ?>

@@ -22,12 +22,23 @@ if (isset($_SESSION['login'])) {
     $nombre=$login;
 }
 
-if (isset($_POST['solucion'])) {
+    if (isset($_POST['solucion'])) {
     $solucion = $_POST['solucion'];
-    $query = "INSERT INTO solucion (solucion, login) VALUES ('$solucion', '$login')";
+    $hoy = date("Y-m-d");   
+    $hora = date("H:i:s");  
+
+    //comprobar si ya existe una respuesta para ese dia de ese jugador
+    $check="SELECT * FROM respuestas WHERE login='$login' AND fecha='$hoy'";
+    $result=$connection->query($check);
+        if ($result->num_rows==0){
+    $query = "INSERT INTO respuestas (respuesta, login, fecha, hora) 
+              VALUES ('$solucion', '$login', '$hoy', '$hora')";
     $result = $connection->query($query);
-    if (!$result) die("Fatal Error");
+    if (!$result) die("Error al insertar la respuesta: " . $connection->error);
+}else{
+    echo "Ya has enviado tu respuesta hoy";
 }
+    }
 
 $connection->close();
 
