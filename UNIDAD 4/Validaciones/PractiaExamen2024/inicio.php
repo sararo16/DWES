@@ -40,6 +40,7 @@ if (isset($_SESSION['login'])) {
 }
     }
 
+
 $connection->close();
 
 echo <<<_END

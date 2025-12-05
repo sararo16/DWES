@@ -19,20 +19,15 @@ if ($consultaSolucion->num_rows==0){
 }
 
 //sumar puntos
-$sumaPuntos=$connection-> query ("UPDATE jugador
-    SET puntos = puntos + 1
-    WHERE login IN (
-        SELECT r.login
-        FROM respuestas r
-        INNER JOIN solucion s ON r.fecha = s.fecha
-        WHERE r.respuesta = s.solucion
-        AND r.fecha = '$hoy')");
+$sumaPuntos=$connection-> query ("UPDATE jugador j SET puntos = puntos + 1 where login in 
+( SELECT login FROM respuestas r, solucion where respuesta = solucion AND r.fecha = $hoy);");
 
 
 //resultados
 $aciertos= $connection->query ("SELECT login, hora FROM respuestas r
 INNER JOIN solucion s ON r.fecha=s.fecha
 WHERE r.respuesta=s.solucion AND r.fecha='$hoy'");
+
 $fallos= $connection->query ("SELECT login, hora FROM respuestas r
 INNER JOIN solucion s ON r.fecha=s.fecha
 WHERE r.respuesta!=s.solucion AND r.fecha='$hoy'");
@@ -44,7 +39,8 @@ echo "<html><body>";
 echo "<h1>Fecha: $hoy</h1>";
 
 echo "<h2>Jugadores acertantes: ".$aciertos->num_rows."</h2>";
-echo "<table><tr><th>Login</th><th>Hora</th></tr>";
+echo "<table border='1'>";
+echo "<tr><th>Login</th><th>Hora</th></tr>";
 
 while ($row = $aciertos->fetch_assoc()) {
     echo "<tr><td>".$row['login']."</td><td>".$row['hora']."</td></tr>";
@@ -53,7 +49,8 @@ while ($row = $aciertos->fetch_assoc()) {
 echo "</table>";
 
 echo "<h2>Jugadores que han fallado: ".$fallos->num_rows."</h2>";
-echo "<table><tr><th>Login</th><th>Hora</th></tr>";
+echo "<table border='1'>";
+echo "<tr><th>Login</th><th>Hora</th></tr>";
 
 while ($row = $fallos->fetch_assoc()) {
     echo "<tr><td>".$row['login']."</td><td>".$row['hora']."</td></tr>";
