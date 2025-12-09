@@ -34,6 +34,7 @@ if (isset($_POST['submit'])) {
                 $fila = $resultP->fetch_assoc();
                 $_SESSION['dni'] = $dni;          
                 $_SESSION['nombre'] = $fila['nombreP'];
+                
 
                 header("Location: Ejercicio2.php"); 
                 exit();

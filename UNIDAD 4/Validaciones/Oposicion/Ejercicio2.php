@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['dni'])) {
+    header("Location: ejercicio1.php");
+    exit();
+}
 
 $dni=$_SESSION['dni'];
 $nombre=$_SESSION['nombre'];
@@ -47,6 +51,9 @@ _END;
 $numrow=$result->num_rows;
 for ($i=0; $i<$numrow; $i++) {
     $row=$result->fetch_assoc();
+
+    $totalHoras+=$row['numhoras'];
+
     echo "<tr>";
     echo "<td>" . $row['codigocurso'] . "</td>";
     echo "<td>" . $row['nombrecurso'] . "</td>";
@@ -57,11 +64,20 @@ for ($i=0; $i<$numrow; $i++) {
     echo "<td>" . $row['profesor'] . "</td>";
     echo "</tr>";
 }
-echo "</table>";
-
+?>
+<tr class="total-row">
+            <td colspan="5" style="text-align: right;">Total horas impartidas:</td>
+            
+            <td><?php echo $totalHoras; ?></td>
+            <td><?php echo $dni; ?></td>
+        </tr>
+    </table>
+</body>
+</html>
+<?php
 $result->close();
 $connection->close();
-
+?>
     
 
 
