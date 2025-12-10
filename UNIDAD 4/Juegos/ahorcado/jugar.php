@@ -15,31 +15,53 @@ if (!isset($_SESSION['login'])) {
     header("Location: index.php");
     exit();
 }
-//si se pulsa probar
-if (isset($_POST['submit'])) {
-    $letra = strtoupper($_POST['letra']);  // Convertir letra a mayúscula
-    $palabra = $_SESSION['palabra']; // Palabra a adivinar
-    $progreso = $_SESSION['progreso']; // Estado actual (guiones y letras)
-    $acierto = false; // Bandera para saber si acertó
 
-    // Recorrer la palabra letra a letra
-    for ($i = 0; $i < strlen($palabra); $i++) {
-        if ($palabra[$i] == $letra) {
-            $progreso[$i] = $letra; // Sustituir guion por la letra acertada
-            $acierto = true;
+$palabra = $_SESSION['palabra'];
+$progreso = $_SESSION['progreso'];
+$fallos = $_SESSION['fallos'];
+$letras_usadas = $_SESSION['letras_usadas'];
+
+if (isset($_POST['letra'])) {
+    $letra = strtolower($_POST['letra']);
+
+    // Evitar repetir letra
+    if (!in_array($letra, $letras_usadas)) {
+        $letras_usadas[] = $letra;
+        $acierto = false;
+
+        for ($i = 0; $i < strlen($palabra); $i++) {
+            if ($palabra[$i] == $letra) {
+                $progreso[$i] = $letra;
+                $acierto = true;
+            }
+        }
+
+        if (!$acierto) {
+            $fallos++;
         }
     }
-
-    $_SESSION['progreso'] = $progreso;  // Actualizar progreso en sesión
-    if (!$acierto) $_SESSION['fallos']++; // Si no acertó, sumar fallo
-
-    // comprobar fin de partida
-    if ($_SESSION['progreso'] == $palabra) {
-        header("Location: acierto.php");
-        exit();
-    } elseif ($_SESSION['fallos'] >= 6) { //max seis fallos
-        header("Location: fallo.php");
-        exit();
-    }
+    $_SESSION['progreso'] = $progreso;
+    $_SESSION['fallos'] = $fallos;
+    $_SESSION['letras_usadas'] = $letras_usadas;
 }
-header("Location: inicio.php");
+
+// Mostrar progreso
+echo "<h2>Palabra: $progreso</h2>";
+echo "<p>Letras usadas: ".implode(", ", $letras_usadas)."</p>";
+
+// Comprobar fin de juego
+if ($progreso == $palabra) {
+    echo "<p>¡Has acertado! La palabra era $palabra.</p>";
+    echo '<a href="inicio.php">Volver a jugar</a>';
+    exit();
+} elseif ($fallos >= 6) {
+    echo "<p>Has perdido. La palabra era $palabra.</p>";
+    echo '<a href="inicio.php">Volver a jugar</a>';
+    exit();
+}
+?>
+
+<form method="post" action="jugar.php">
+    Introduce una letra: <input type="text" name="letra" maxlength="1">
+    <input type="submit" value="Probar">
+</form>

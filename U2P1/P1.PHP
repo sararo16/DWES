@@ -10,11 +10,11 @@ if ($variable1 == $variable2){
 }
 else if ($variable1 > $variable2){
     $resultado=$variable1-$variable2;
-    echo=$resultado;
+    echo $resultado;
 }
 else if ($variable1<$variable2){
     $resultado=$variable1+$variable2;
-    echo=$resultado;
+    echo $resultado;
 }
 
 /* Ejercicio2*/
@@ -39,12 +39,12 @@ $PhoraExtra=60;
 $HorasTrabajadas=120;
 $diferencia=$HorasTotal-$HorasTrabajadas;
 if ($diferencia<8){
-    $paga=8*$PhoraExtra*2($diferencia-8)*$PhoraExtra*3;
+    $paga = 8 * $PhoraExtra * 2 * ($diferencia - 8) * $PhoraExtra * 3;
 }else{
     $paga=$diferencia*$PhoraExtra*2;
 }
 echo "Horas trabajas: $HorasTrabajadas";
-echo "Horas extra: $diferencia"<br>;
+echo "Horas extra: $diferencia";
 echo "Dinero extra: $paga";
 
 /* Ejercicio4*/
