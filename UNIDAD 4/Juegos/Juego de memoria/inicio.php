@@ -16,17 +16,18 @@ if (!isset($_SESSION['login'])) {
 echo "Bienvenido ".$_SESSION['login']."<br>";
 echo "<form action='jugar.php' method='post'>";
 
+//recorre el mazo de cartas 
 for ($i=0; $i<count($_SESSION['mazo']); $i++) {
     // Usamos if/else 
-    if (in_array($i, $_SESSION['levantadas'])) {
-        $valor = $_SESSION['mazo'][$i];   // Mostrar carta real
-    } else {
+    if (in_array($i, $_SESSION['levantadas'])) { //si la carta esta levantada, muestra el valor real
+        $valor = $_SESSION['mazo'][$i];   
+    } else { //sino muestra una x
         $valor = "X";                     // Mostrar carta oculta
     }
-
+    //cada carta es un boton que envia su posicion al ficheron jugar
     echo "<button type='submit' name='carta' value='$i' style='width:80px;height:80px;'>$valor</button>";
 
-    // Salto de línea cada 4 cartas para formar filas
+    // cada 4 cartas hace un salto de linea
     if (($i+1)%4==0) echo "<br>";
 }
 echo "</form>";

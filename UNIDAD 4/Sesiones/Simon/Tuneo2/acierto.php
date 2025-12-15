@@ -1,14 +1,14 @@
 <?php
 session_start();
-require 'pintar_circulos.php';
+require 'pintar-circulos.php';
 
 $hn = 'localhost';
 $db = 'bdsimon';
 $un = 'root';
 $pw = '';
 
-$numero = $_SESSION['numero'];
-$numero_colores = $_SESSION['numero-colores'];
+$num = $_SESSION['numero'];
+$col = $_SESSION['numero-colores'];
 
 $connection = new mysqli($hn, $un, $pw, $db);
  if ($connection->connect_error) die("Fatal Error");
@@ -19,20 +19,18 @@ $connection = new mysqli($hn, $un, $pw, $db);
     $row=$result->fetch_assoc();
     $codigousu = $row['Codigo'];
 
-   $query2 = "INSERT INTO jugadas (codigousu, acierto, numcirculos, numcolor)
-           VALUES ($codigousu, 1, $numero, $numero_colores)";
-    $connection->query($query2);    
+    $query2 = "INSERT INTO jugadas (codigousu, acierto) VALUES ($codigousu, 1)";
+    
 
-$result->close();
-$connection->close();
-
+        $result->close();
+        $connection->close();
 
 $colores_correctos = $_SESSION['colores-correctos'];
 
-echo "<h2>¡Enhorabuena, has acertado la combinación!</h2>";
+echo "<h2>¡Enhorabuena $usuario, has acertado la combinación!</h2>";
 
 pintar_circulos($colores_correctos);
 
-echo '<br><a href="dificultad.php">Volver a jugar</a>';
-echo '<br><a href="estadistica.php">Ver estadisticas</a>';
+echo '<br><a href="dificultad.php">Volver a jugar</a><br><br>';
+echo "<a href='estadistica.php'>Estadísticas</a>";
 ?> 

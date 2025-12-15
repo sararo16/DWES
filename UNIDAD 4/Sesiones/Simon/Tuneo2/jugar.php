@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'pintar_circulos.php';
+require 'pintar-circulos.php';
 
 
 if (!isset($_SESSION['colores-escogidos'])) {
@@ -38,8 +38,10 @@ if ($_SESSION['pulsaciones'] >= $_SESSION['numero']) {
 echo <<<END
 <form method="post" action="jugar.php">
     <h1>SIMÓN</h1>
-        <h2>Pulsa los botones en el orden correspondiente</h2>
 END;
+
+echo "<h2>$_SESSION[usuario], pulsa los colores en el orden correspondiente</h2>";
+
 //generar los botones segun los colores seleccionados
 $todos_colores=array('red','blue','yellow','green','purple','orange','pink','brown');
 $colores_disponibles = array_slice($todos_colores, 0, $_SESSION['numero-colores']);
@@ -48,6 +50,7 @@ foreach ($colores_disponibles as $color) {
     $nombre = strtoupper($color);
     echo "<button type='submit' name='color' value='$color' style='background-color:$color; border:2px solid black; margin-right:10px;'>$nombre</button>";
 }
+
 
 echo '</form>';
 ?>

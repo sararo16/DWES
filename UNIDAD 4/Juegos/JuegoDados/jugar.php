@@ -34,7 +34,7 @@ if ($dadoJugador > $dadoMaquina) {
     $connection->query($query);
 
 } elseif ($dadoJugador < $dadoMaquina) {
-    echo "<p>Has perdido. −1 punto</p>";
+    echo "<p>Has perdido. -1 punto</p>";
     $puntosGanados = -1;
     $query = "INSERT INTO partidas (login, resultado, fecha) VALUES ('$login', 0, CURDATE())";
     $connection->query($query);
