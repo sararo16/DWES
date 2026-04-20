@@ -4,14 +4,14 @@
     
     <div class="row">
         <div class="col-sm-4">
-            <img src="{{$arrayPeliculas['poster']}}" style="height:200px"/>
+            <img src="{{$pelicula['poster']}}" style="height:200px"/>
         </div>
 
         <div class="col-sm-8">
-            <h1>{{$arrayPeliculas['title']}}</h1>
-            <p><strong> Año: </strong>{{$arrayPeliculas['year']}}</p>
-            <p><strong> Director: </strong>{{$arrayPeliculas['director']}}</p>
-            <p><strong> Sinopsis: </strong>{{$arrayPeliculas['synopsis']}}</p>
+            <h1>{{$pelicula['title']}}</h1>
+            <p><strong> Año: </strong>{{$pelicula['year']}}</p>
+            <p><strong> Director: </strong>{{$pelicula['director']}}</p>
+            <p><strong> Sinopsis: </strong>{{$pelicula['synopsis']}}</p>
 
             <button class="btn btn-danger" > Devolver pelicula </button>
             <button class="btn btn-warning" > Editar pelicula </button>
